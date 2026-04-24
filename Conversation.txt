@@ -1,0 +1,289 @@
+Input 1: You are a senior DevOps engineer helping me build a complete end-to-end project.
+
+Project Title:
+GitOps Lite: Infrastructure as Code Driven CI/CD Pipeline for Automated Dockerized Application Deployment on AWS using Terraform, Ansible, and Jenkins.
+
+Goal:
+Guide me step-by-step to build a working system where pushing code to Git automatically triggers a CI/CD pipeline that provisions infrastructure, configures servers, and deploys a Dockerized application on AWS.
+
+Important Context:
+
+* I have full access to AWS services (no restrictions).
+* I am a student, so keep the implementation simple, clean, and practical.
+* Focus on working system over unnecessary complexity.
+* Use best practices but avoid overengineering.
+
+---
+
+## 🔧 What I Need You To Do
+
+Break the entire project into clear phases and guide me step-by-step.
+At each step:
+
+* Explain what we are doing (short explanation)
+* Provide exact commands/code
+* Explain where to place files
+* Explain expected output
+
+---
+
+## 🧱 Project Requirements
+
+### 1. Application
+
+* Create a simple web app (Node.js or Flask preferred)
+* It should have:
+
+  * One main page
+  * Simple message like "Deployed via GitOps Lite"
+* Keep it minimal
+
+---
+
+### 2. Docker Setup
+
+* Create a Dockerfile for the application
+* Ensure:
+
+  * Lightweight image
+  * Proper port exposure
+* Show:
+
+  * How to build image
+  * How to run container locally
+
+---
+
+### 3. Terraform (Infrastructure as Code)
+
+* Write Terraform scripts to:
+
+  * Create an AWS EC2 instance
+  * Configure security group (allow SSH + HTTP)
+* Use variables where possible
+* Show:
+
+  * Folder structure
+  * terraform init / apply commands
+* Output:
+
+  * Public IP of EC2
+
+---
+
+### 4. Ansible (Server Configuration)
+
+* Create Ansible inventory using EC2 IP
+* Write playbook to:
+
+  * Install Docker
+  * Install Git
+  * Pull application repo
+* Ensure:
+
+  * Proper SSH setup
+* Show how to run playbook
+
+---
+
+### 5. Jenkins CI/CD Pipeline
+
+* Setup Jenkins (locally or on EC2)
+
+* Create pipeline that:
+
+  1. Pulls code from GitHub
+  2. Builds Docker image
+  3. Connects to EC2 via SSH
+  4. Stops old container (if running)
+  5. Runs new container
+
+* Provide:
+
+  * Jenkinsfile (pipeline script)
+  * Step-by-step Jenkins setup instructions
+
+---
+
+### 6. Git Integration
+
+* Explain:
+
+  * How to connect GitHub to Jenkins
+  * How to use webhooks to trigger builds
+
+---
+
+### 7. Deployment Flow (Important)
+
+Make sure the final system works like this:
+
+1. I push code to GitHub
+2. Jenkins automatically triggers
+3. Docker image is built
+4. App is deployed to EC2
+5. Website is accessible via browser
+
+---
+
+### 8. Monitoring (Optional but recommended)
+
+* Show how to enable AWS CloudWatch for EC2
+* Basic CPU monitoring setup
+
+---
+
+## 📁 Expected Folder Structure
+
+Guide me to organize like:
+
+project-root/
+
+* app/
+* Dockerfile
+* terraform/
+* ansible/
+* Jenkinsfile
+
+---
+
+## 🚀 How I Want You To Guide Me
+
+* Do NOT dump everything at once
+* Go step-by-step
+* Wait for me to complete each step before moving ahead
+* Debug errors if I face any
+
+---
+
+## ⚠️ Constraints
+
+* Do NOT use Kubernetes (keep it Docker-based)
+* Keep everything beginner-friendly but realistic
+* Avoid unnecessary tools
+
+---
+
+## ✅ Final Output
+
+By the end, I should have:
+
+* Working CI/CD pipeline
+* Infrastructure created using Terraform
+* Server configured using Ansible
+* Dockerized app deployed on AWS
+* Automatic deployment on Git push
+
+---
+
+Start with Step 1: Creating the application and project structure.
+
+
+Output 1: Starting Step 1 by scaffolding a minimal application and the target project layout in your workspace, then I’ll give you exact run commands and expected output so you can verify locally. I’m first checking the current folder contents so we place files correctly.
+
+Read GitLite
+
+I’m now creating the Step 1 scaffold and a minimal Flask app so you immediately have a runnable starting point plus placeholders for upcoming phases.
+
+The scaffold is in place; next I’m verifying the generated structure so you can compare it exactly before running the app.
+
+Step 1 Complete: Application + Project Structure
+
+I created the starter structure and a minimal Flask web app for you.
+
+Files created:
+
+Files created:
+
+.gitignore
+Dockerfile
+Jenkinsfile
+app.py
+requirements.txt
+index.html
+README.md
+README.md
+What we are doing in this step:
+
+Building a minimal app first so every later phase (Docker, Terraform, Ansible, Jenkins) has a real deployable target.
+Keeping placeholders ready for upcoming phases.
+Code used for the app:
+
+# app/app.py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+Run locally (PowerShell):
+
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r app/requirements.txt
+python app/app.py
+
+If activation is blocked by policy, run this once in the same terminal and retry activate:
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+Expected output:
+
+Terminal shows Flask startup message, including Running on http://127.0.0.1:5000
+Open browser at http://127.0.0.1:5000
+Page shows: Deployed via GitOps Lite
+Reply with Step 1 done (or paste any error), and I will move to Step 2: Docker setup.
+
+Input 2: Step 1 done.
+
+output 2: Step 2 starts now: I’m gathering the current app and placeholder Docker files so I can add a clean, lightweight Docker setup with exact commands and expected results.
+
+I found the placeholder and will now implement a production-friendly but beginner-simple Docker setup by updating Dockerfile, adding .dockerignore, and making port handling in app.py configurable.
+
+I’ve applied the Docker changes and will quickly validate file contents and diagnostics so you get a copy-paste-ready Step 2 without hidden issues.
+
+Step 2 complete: Docker setup is now implemented and ready to test locally.
+
+What we are doing:
+We containerize the Flask app with a lightweight Python image, expose the app port, and make builds faster/cleaner with a docker ignore file.
+
+Where files are placed:
+
+Dockerfile
+.dockerignore
+app.py:1
+What changed:
+
+Dockerfile now uses python:3.12-slim, installs dependencies from requirements.txt, copies app code, exposes port 5000, and runs app.py.
+.dockerignore excludes Git, virtual env, cache, logs, and Terraform state files.
+app.py:13 now reads PORT from environment with default 5000.
+Run these commands from project root:
+
+docker build -t gitops-lite:dev .
+docker run --name gitops-lite -d -p 5000:5000 gitops-lite:dev
+docker ps
+docker logs gitops-lite --tail 20
+
+Optional quick check:
+
+curl http://localhost:5000
+
+Expected output:
+
+docker build finishes successfully and prints Successfully tagged gitops-lite:dev
+docker ps shows container gitops-lite in Up state
+Browser at http://localhost:5000 shows Deployed via GitOps Lite
+docker logs shows Flask server startup lines
+Stop and clean container when done testing:
+
+docker stop gitops-lite
+docker rm gitops-lite
+
+Reply with Step 2 done (or paste any error), and I will guide Step 3: Terraform infrastructure for EC2 + security group + public IP output.
