@@ -7,7 +7,7 @@ pipeline {
 	}
 
 	parameters {
-		string(name: 'EC2_HOST', defaultValue: '', description: 'EC2 public IP or public DNS')
+		string(name: 'EC2_HOST', defaultValue: '98.87.155.33', description: 'EC2 public IP or public DNS')
 		string(name: 'EC2_USER', defaultValue: 'ec2-user', description: 'SSH username on EC2')
 		string(name: 'SSH_CREDENTIALS_ID', defaultValue: 'ec2-ssh-key', description: 'Jenkins SSH private key credentials ID')
 		string(name: 'APP_PORT', defaultValue: '80', description: 'Host port to expose app on EC2')
